@@ -49,7 +49,7 @@ case class TweetParams(owner:String, params:List[TweetParam])
 class TweetParser(val screenName : String) extends RegexParsers {
 	def chars = "[a-zA-Z0-9_]+".r
 	def mention = s"@${screenName}"
-	def instruction = (chars) ~ ("=" ~> chars).?  ^^ {
+	def instruction = (chars) ~ ("=".? ~> chars).?  ^^ {
 		case key ~ Some(value) => TweetParam(key,value) 
 		case key ~ None => TweetParam(key,"")
 	}
